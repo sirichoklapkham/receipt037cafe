@@ -984,8 +984,8 @@
             try {
                 showToast(`กำลังสร้างตั๋วโค้ดสำหรับชุดที่ ${currentTabGroup + 1} (ขนาด 80mm)...`, "info");
 
-                const width = 576;
-                const voucherHeight = 300;
+                const width = 576; // ความกว้างมาตรฐานสำหรับเครื่องพิมพ์ 80mm
+                const voucherHeight = 320; // เพิ่มความสูงเล็กร้อยรองรับข้อความใหญ่
                 const totalHeight = voucherHeight * availableCodes.length;
 
                 const canvas = document.createElement('canvas');
@@ -1002,29 +1002,39 @@
                     ctx.fillStyle = '#000000';
                     ctx.textAlign = 'center';
 
-                    ctx.font = 'bold 28px Prompt, sans-serif';
-                    ctx.fillText('037Cafe & Studio', width / 2, yOffset + 45);
+                    // ชื่อร้าน
+                    ctx.font = 'bold 30px Prompt, sans-serif';
+                    ctx.fillText('037Cafe & Studio', width / 2, yOffset + 40);
 
-                    ctx.font = '16px Prompt, sans-serif';
-                    ctx.fillText('คูปองถ่ายภาพ PhotoBooth (ใช้ได้ 1 ครั้ง)', width / 2, yOffset + 75);
+                    // ระบุชัดเจนว่าเป็นคูปองสำหรับสั่งปริ้น PhotoBooth (ใบเสร็จ) - ปรับตัวใหญ่หนา
+                    ctx.font = 'bold 26px Prompt, sans-serif';
+                    ctx.fillText('คูปองสั่งปริ้น PhotoBooth (ใบเสร็จ)', width / 2, yOffset + 75);
 
+                    // กรอบรหัส
                     ctx.lineWidth = 3;
                     ctx.strokeStyle = '#000000';
-                    ctx.strokeRect(40, yOffset + 95, width - 80, 110);
+                    ctx.strokeRect(30, yOffset + 95, width - 60, 115);
 
-                    ctx.font = 'bold 16px Prompt, sans-serif';
+                    ctx.font = 'bold 18px Prompt, sans-serif';
                     ctx.fillText('รหัสสำหรับกรอกหน้าเครื่อง', width / 2, yOffset + 125);
 
-                    ctx.font = 'bold 44px monospace';
-                    ctx.fillText(item.code, width / 2, yOffset + 180);
+                    // โค้ดตัวใหญ่พิเศษ
+                    ctx.font = 'bold 48px monospace';
+                    ctx.fillText(item.code, width / 2, yOffset + 182);
 
+                    // แนะนำสถานที่นำไปใช้ - ตัวใหญ่ชัดเจน
+                    ctx.font = 'bold 20px Prompt, sans-serif';
+                    ctx.fillText('นำรหัสนี้ไปกรอกที่ช่อง "รหัสพิมพ์รูป PhotoBooth"', width / 2, yOffset + 242);
+
+                    // หมายเหตุตัวเล็กด้านล่าง
                     ctx.font = '14px Prompt, sans-serif';
-                    ctx.fillText('กรุณานำรหัสนี้ไปกรอกที่ตู้ PhotoBooth', width / 2, yOffset + 235);
+                    ctx.fillText('(สิทธิ์ใช้ได้ 1 ครั้งต่อ 1 โค้ด)', width / 2, yOffset + 270);
 
+                    // เส้นประตัดใบ
                     ctx.beginPath();
                     ctx.setLineDash([8, 8]);
-                    ctx.moveTo(10, yOffset + 280);
-                    ctx.lineTo(width - 10, yOffset + 280);
+                    ctx.moveTo(10, yOffset + 300);
+                    ctx.lineTo(width - 10, yOffset + 300);
                     ctx.stroke();
                     ctx.setLineDash([]);
                 });
@@ -1190,7 +1200,6 @@
                 closeBtn.classList.remove('opacity-0', 'pointer-events-none');
                 playSound('success');
 
-                // ปิดหน้าต่างป๊อบอัพพิมพ์รูปภาพอัตโนมัติภายใน 3 วินาที (3000 ms)
                 setTimeout(() => {
                     closePrinterModal();
                 }, 3000);
