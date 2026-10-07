@@ -49,7 +49,7 @@
         }
 
         .dither-effect {
-            filter: grayscale(100%) contrast(120%) brightness(115%);
+            filter: grayscale(100%) contrast(140%) brightness(110%);
             image-rendering: pixelated;
         }
 
@@ -68,7 +68,7 @@
         ::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 3px; }
     </style>
 </head>
-<body class="h-screen w-screen overflow-hidden flex flex-col items-center justify-between p-2 select-none">
+<body class="h-screen w-screen overflow-hidden flex flex-col items-center justify-between p-2 select-none relative">
 
     <!-- HEADER -->
     <header class="w-full max-w-6xl text-center flex items-center justify-between px-2 shrink-0">
@@ -133,26 +133,14 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="bg-white/80 p-2 rounded-xl border border-sky-200 flex flex-col justify-center gap-0.5 shadow-sm">
-                        <div class="flex justify-between items-center text-[10px] text-sky-800 font-medium">
-                            <span class="flex items-center gap-1">
-                                <i class="fa-solid fa-adjust text-sky-500"></i> Shadow Lift
-                            </span>
-                            <span id="shadow-val-text" class="font-mono text-sky-600 font-bold">30</span>
-                        </div>
-                        <input type="range" id="shadow-slider" min="0" max="100" value="30" oninput="updateShadowFilter()" class="w-full accent-sky-500 cursor-pointer h-1 bg-sky-100 rounded-lg">
-                    </div>
-
-                    <div class="flex items-center justify-between bg-white/80 p-2 rounded-xl border border-sky-200 shadow-sm">
-                        <span class="text-[10px] text-sky-800 font-semibold flex items-center gap-1">
-                            <i class="fa-solid fa-wand-magic-sparkles text-sky-500"></i> ขาวดำ / Vintage
+                <div class="bg-white/80 p-2 rounded-xl border border-sky-200 flex flex-col justify-center gap-0.5 shadow-sm">
+                    <div class="flex justify-between items-center text-[10px] text-sky-800 font-medium">
+                        <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-adjust text-sky-500"></i> Shadow Lift (ปรับความสว่างขาวดำ)
                         </span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="filter-toggle" onchange="toggleCameraFilter()" class="sr-only peer" checked>
-                            <div class="w-8 h-4 bg-sky-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-sky-500"></div>
-                        </label>
+                        <span id="shadow-val-text" class="font-mono text-sky-600 font-bold">70</span>
                     </div>
+                    <input type="range" id="shadow-slider" min="0" max="100" value="70" oninput="updateShadowFilter()" class="w-full accent-sky-500 cursor-pointer h-1 bg-sky-100 rounded-lg">
                 </div>
 
                 <button id="start-btn" onclick="startPhotoSequence()" class="w-full bg-gradient-to-r from-sky-400 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-bold py-2.5 px-3 rounded-2xl shadow-md border border-sky-300 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm">
@@ -202,7 +190,7 @@
         </div>
     </main>
 
-    <!-- HARDWARE SETTINGS MODAL (DIRECT USB CONFIG) -->
+    <!-- HARDWARE SETTINGS MODAL -->
     <div id="hardware-modal" class="fixed inset-0 bg-sky-950/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
         <div class="bg-white border-2 border-sky-300 rounded-3xl max-w-sm w-full p-5 shadow-2xl text-center relative transform scale-95 transition-all duration-300" id="hardware-modal-card">
             <button onclick="toggleHardwareModal(false)" class="absolute top-3 right-3 text-sky-400 hover:text-sky-700 w-8 h-8 rounded-full bg-sky-50 flex items-center justify-center">
@@ -217,7 +205,7 @@
                 <div>
                     <label class="text-xs text-sky-800 font-medium block mb-1">โหมดการพิมพ์:</label>
                     <select id="print-mode" onchange="togglePrintModeUI()" class="w-full bg-white text-sky-900 border border-sky-300 rounded-xl p-2 text-xs focus:outline-none focus:ring-1 focus:ring-sky-400">
-                        <option value="hardware" selected>พิมพ์ผ่าน USB โดยตรง (WebUSB Direct)</option>
+                        <option value="hardware" selected>พิมพ์ผ่าน USB โดยตรง (WebUSB High-Speed Stream)</option>
                         <option value="simulation">จำลองแอนิเมชันบนหน้าจอ (Demo Mode)</option>
                     </select>
                 </div>
@@ -232,7 +220,7 @@
                     </div>
 
                     <button type="button" onclick="connectUsbDevice()" class="w-full bg-sky-500 hover:bg-sky-600 text-white border border-sky-400 py-2 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1 shadow-sm">
-                        <i class="fa-solid fa-plug"></i> เลือกรวมและเชื่อมต่อเครื่องพิมพ์ USB
+                        <i class="fa-solid fa-plug"></i> เลือกและเชื่อมต่อเครื่องพิมพ์ USB
                     </button>
 
                     <div>
@@ -265,7 +253,6 @@
             <div class="text-sm font-bold text-sky-800 tracking-wider mb-0.5">★ STAFF • จัดการ 30 โค้ดพิมพ์รูป PhotoBooth ★</div>
             <div class="text-[11px] text-sky-600 mb-2 font-medium">037Cafe & Studio</div>
 
-            <!-- STAFF CONSTANT CODES INFO -->
             <div class="bg-sky-50 border border-sky-200 rounded-xl p-2 mb-3 text-left">
                 <div class="text-[11px] font-bold text-sky-800 flex items-center gap-1">
                     <i class="fa-solid fa-key text-sky-500"></i> โค้ดสำหรับ Staff (ใช้กี่ครั้งก็ได้):
@@ -278,14 +265,12 @@
                 </div>
             </div>
 
-            <!-- TAB SELECTION FOR 3 GROUPS (10 CODES EACH) -->
             <div class="flex border-b border-sky-200 mb-2 gap-1">
                 <button id="tab-btn-0" onclick="switchCodeTab(0)" class="flex-1 py-1.5 text-xs font-bold border-b-2 border-sky-500 text-sky-700 transition-all">ชุดที่ 1 (1-10)</button>
                 <button id="tab-btn-1" onclick="switchCodeTab(1)" class="flex-1 py-1.5 text-xs font-bold border-b-2 border-transparent text-sky-400 hover:text-sky-600 transition-all">ชุดที่ 2 (11-20)</button>
                 <button id="tab-btn-2" onclick="switchCodeTab(2)" class="flex-1 py-1.5 text-xs font-bold border-b-2 border-transparent text-sky-400 hover:text-sky-600 transition-all">ชุดที่ 3 (21-30)</button>
             </div>
 
-            <!-- ACTION BUTTONS IN STAFF MODAL -->
             <div class="flex flex-wrap gap-2 mb-3">
                 <button onclick="regenerateCurrent10Codes()" class="flex-1 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-2 rounded-xl text-xs transition-all flex items-center justify-center gap-1 shadow-sm">
                     <i class="fa-solid fa-rotate"></i> สุ่มใหม่ 10 โค้ด (ชุดนี้)
@@ -345,14 +330,13 @@
     <!-- Hidden Canvas -->
     <canvas id="escpos-render-canvas" class="hidden"></canvas>
 
-    <!-- Toast Notification -->
-    <div id="toast-message" class="fixed bottom-3 left-1/2 -translate-x-1/2 bg-sky-900/90 border border-sky-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+    <!-- Toast Notification (มุมซ้ายบน: top-4 left-4) -->
+    <div id="toast-message" class="fixed top-4 left-4 bg-sky-900/90 border border-sky-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
         <i id="toast-icon" class="fa-solid fa-circle-info text-sky-300"></i>
         <span id="toast-text">ข้อความ</span>
     </div>
 
     <script>
-        // โหลดข้อมูล Passcodes จาก localStorage หากไม่มีให้ใช้ค่าเริ่มต้น
         function loadPasscodes() {
             const saved = localStorage.getItem('037_photobooth_codes');
             if (saved) {
@@ -373,24 +357,22 @@
         }
 
         let activePasscodes = loadPasscodes();
-        let currentTabGroup = 0; // 0 = 0-9 (ชุด 1), 1 = 10-19 (ชุด 2), 2 = 20-29 (ชุด 3)
+        let currentTabGroup = 0;
         
         let capturedPhotos = [];
         let isCapturing = false;
-        let shadowLiftValue = 30;
+        let shadowLiftValue = 70;
         let targetPhotoCount = 1;
 
         let secretClickCount = 0;
         let secretClickTimer = null;
 
-        // รหัส Staff ใช้กี่ครั้งก็ได้ไม่มีวันหมดอายุ
         const staffCodes = ["STAFF037", "MASTER037", "VIP037", "888888"];
 
-        // USB Connection State variables
         let printMode = "hardware";
         let usbDevice = null;
         let usbEndpointNumber = null;
-        let targetPaperWidth = 576; // 80mm default (576 dots)
+        let targetPaperWidth = 576;
 
         function showToast(message, type = 'info') {
             const toast = document.getElementById('toast-message');
@@ -402,18 +384,18 @@
             toastText.innerText = message;
             if (type === 'error') {
                 toastIcon.className = "fa-solid fa-circle-exclamation text-red-300";
-                toast.className = "fixed bottom-3 left-1/2 -translate-x-1/2 bg-red-900/90 border border-red-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
+                toast.className = "fixed top-4 left-4 bg-red-900/90 border border-red-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
             } else if (type === 'success') {
                 toastIcon.className = "fa-solid fa-circle-check text-emerald-300";
-                toast.className = "fixed bottom-3 left-1/2 -translate-x-1/2 bg-emerald-900/90 border border-emerald-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
+                toast.className = "fixed top-4 left-4 bg-emerald-900/90 border border-emerald-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
             } else {
                 toastIcon.className = "fa-solid fa-circle-info text-sky-300";
-                toast.className = "fixed bottom-3 left-1/2 -translate-x-1/2 bg-sky-900/90 border border-sky-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
+                toast.className = "fixed top-4 left-4 bg-sky-900/90 border border-sky-400 text-white px-4 py-2 rounded-xl shadow-2xl z-[60] text-xs font-medium transition-all duration-300 flex items-center gap-2 opacity-100";
             }
 
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
+            }, 2000);
         }
 
         const synth = new Tone.Synth().toDestination();
@@ -507,15 +489,10 @@
         }
 
         function toggleCameraFilter() {
-            const isChecked = document.getElementById('filter-toggle').checked;
-            let filterCss = "";
-            
-            if (isChecked) {
-                filterCss += 'grayscale(100%) contrast(115%) ';
-            }
+            let filterCss = 'grayscale(100%) contrast(125%) ';
 
-            const brightnessAdd = 1 + (shadowLiftValue / 200);
-            const contrastSub = 1 - (shadowLiftValue / 400);
+            const brightnessAdd = 1 + (shadowLiftValue / 180);
+            const contrastSub = 1 - (shadowLiftValue / 350);
             filterCss += `brightness(${brightnessAdd}) contrast(${contrastSub})`;
 
             videoElem.style.filter = filterCss.trim();
@@ -626,21 +603,18 @@
             ctx.scale(-1, 1);
             ctx.drawImage(videoElem, 0, 0, tempCanvas.width, tempCanvas.height);
 
-            const isGrayscale = document.getElementById('filter-toggle').checked;
             const imgData = ctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
             const d = imgData.data;
 
-            const shadowOffset = 40 + (shadowLiftValue / 100) * 85; 
+            const shadowOffset = 55 + (shadowLiftValue / 100) * 75; 
 
             for (let i = 0; i < d.length; i += 4) {
                 let r = d[i];
                 let g = d[i+1];
                 let b = d[i+2];
 
-                if (isGrayscale) {
-                    const v = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-                    r = g = b = v;
-                }
+                const v = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                r = g = b = v;
 
                 r = shadowOffset + (r * (255 - shadowOffset) / 255);
                 g = shadowOffset + (g * (255 - shadowOffset) / 255);
@@ -698,7 +672,6 @@
             showToast(`บันทึกการตั้งค่า: ${printMode === 'hardware' ? 'USB ตรง (' + (targetPaperWidth === 576 ? '80mm' : '58mm') + ')' : 'จำลองแอนิเมชัน'}`, 'success');
         }
 
-        // กดโลโก้ 5 ครั้งเพื่อสลับเปิด/ปิดโหมด STAFF
         function handleSecretTitleClick() {
             secretClickCount++;
             clearTimeout(secretClickTimer);
@@ -708,12 +681,10 @@
                 const staffBtn = document.getElementById('open-staff-btn');
                 
                 if (staffBtn.classList.contains('hidden')) {
-                    // เปิดระบบ STAFF
                     staffBtn.classList.remove('hidden');
                     toggleStaffModal(true);
                     showToast("ปลดล็อกโหมดพนักงาน (STAFF) สำเร็จ!", "success");
                 } else {
-                    // ปิดระบบ STAFF
                     staffBtn.classList.add('hidden');
                     toggleStaffModal(false);
                     showToast("ปิดโหมดพนักงาน (STAFF) เรียบร้อยแล้ว", "info");
@@ -788,7 +759,6 @@
             });
         }
 
-        // สุ่มใหม่เฉพาะ 10 โค้ดในชุดปัจจุบัน
         function regenerateCurrent10Codes() {
             const startIndex = currentTabGroup * 10;
             for (let i = 0; i < 10; i++) {
@@ -796,7 +766,7 @@
                 const randomNum = Math.floor(100000 + Math.random() * 900000).toString();
                 activePasscodes[idx] = { code: randomNum, used: false };
             }
-            savePasscodes(); // บันทึกลง localStorage
+            savePasscodes();
             render30CodesUI();
             showToast(`สุ่มรหัสใหม่ 10 โค้ด (ชุดที่ ${currentTabGroup + 1}) เรียบร้อย!`, "success");
         }
@@ -834,7 +804,7 @@
         }
 
         // ======================================================
-        // WebUSB DIRECT CONNECTION LOGIC
+        // WebUSB HIGH-SPEED STREAM LOGIC
         // ======================================================
 
         async function connectUsbDevice() {
@@ -893,14 +863,13 @@
                 }
             }
 
-            const chunkSize = 64;
+            const chunkSize = 512;
             for (let i = 0; i < byteArray.length; i += chunkSize) {
                 const chunk = byteArray.slice(i, i + chunkSize);
                 await usbDevice.transferOut(usbEndpointNumber, chunk);
             }
         }
 
-        // VERIFY AND PRINT HANDLER
         async function verifyAndPrint() {
             const inputVal = document.getElementById('print-code-input').value.trim().toUpperCase();
 
@@ -914,7 +883,6 @@
             const matchedIndex = activePasscodes.findIndex(item => item.code === inputVal);
 
             if (isStaffCode) {
-                // รหัส Staff: ใช้กี่ครั้งก็ได้ ไม่ต้องเปลี่ยนสถานะ used
                 playSound('success');
                 showToast("รหัส Staff ผ่านการตรวจสอบ!", "success");
                 if (printMode === 'hardware') {
@@ -923,7 +891,6 @@
                     showPrinterModal();
                 }
             } else if (matchedIndex !== -1) {
-                // รหัสลูกค้าปกติ
                 if (activePasscodes[matchedIndex].used) {
                     playSound('error');
                     showToast("โค้ดนี้ถูกใช้งานไปแล้ว!", "error");
@@ -931,7 +898,7 @@
                 }
 
                 activePasscodes[matchedIndex].used = true;
-                savePasscodes(); // อัปเดตสถานะที่ใช้แล้วลง localStorage
+                savePasscodes();
                 playSound('success');
 
                 if (printMode === 'hardware') {
@@ -945,9 +912,8 @@
             }
         }
 
-        // GENERATE ESC/POS RASTER COMMANDS FOR PHOTOSTRIP
         async function generatePhotostripEscPosBytes() {
-            const width = targetPaperWidth; // 576 dots for 80mm
+            const width = targetPaperWidth;
             
             const photoWidth = Math.floor(width * 0.88);
             const photoHeight = Math.floor(photoWidth * 0.75);
@@ -1000,9 +966,6 @@
             return canvasToEscPosRasterBytes(renderCanvas);
         }
 
-        // ======================================================
-        // PRINT 10 CODES VOUCHERS FOR 80MM PRINTER
-        // ======================================================
         async function printCustomerVouchers10Codes() {
             const startIndex = currentTabGroup * 10;
             const current10 = activePasscodes.slice(startIndex, startIndex + 10);
@@ -1021,8 +984,8 @@
             try {
                 showToast(`กำลังสร้างตั๋วโค้ดสำหรับชุดที่ ${currentTabGroup + 1} (ขนาด 80mm)...`, "info");
 
-                const width = 576; // ขนาดจุดกระดาษ 80mm
-                const voucherHeight = 300; // ความสูงตั๋วต่อใบ
+                const width = 576;
+                const voucherHeight = 300;
                 const totalHeight = voucherHeight * availableCodes.length;
 
                 const canvas = document.createElement('canvas');
@@ -1030,7 +993,6 @@
                 canvas.height = totalHeight;
                 const ctx = canvas.getContext('2d');
 
-                // พื้นหลังขาว
                 ctx.fillStyle = '#FFFFFF';
                 ctx.fillRect(0, 0, width, totalHeight);
 
@@ -1040,14 +1002,12 @@
                     ctx.fillStyle = '#000000';
                     ctx.textAlign = 'center';
 
-                    // หัวข้อ
                     ctx.font = 'bold 28px Prompt, sans-serif';
                     ctx.fillText('037Cafe & Studio', width / 2, yOffset + 45);
 
                     ctx.font = '16px Prompt, sans-serif';
                     ctx.fillText('คูปองถ่ายภาพ PhotoBooth (ใช้ได้ 1 ครั้ง)', width / 2, yOffset + 75);
 
-                    // กล่องแสดงโค้ด
                     ctx.lineWidth = 3;
                     ctx.strokeStyle = '#000000';
                     ctx.strokeRect(40, yOffset + 95, width - 80, 110);
@@ -1055,15 +1015,12 @@
                     ctx.font = 'bold 16px Prompt, sans-serif';
                     ctx.fillText('รหัสสำหรับกรอกหน้าเครื่อง', width / 2, yOffset + 125);
 
-                    // ตัวหนังสือโค้ดขนาดใหญ่
                     ctx.font = 'bold 44px monospace';
                     ctx.fillText(item.code, width / 2, yOffset + 180);
 
-                    // ท้ายตั๋ว
                     ctx.font = '14px Prompt, sans-serif';
                     ctx.fillText('กรุณานำรหัสนี้ไปกรอกที่ตู้ PhotoBooth', width / 2, yOffset + 235);
 
-                    // เส้นประตัดแบ่งใบ
                     ctx.beginPath();
                     ctx.setLineDash([8, 8]);
                     ctx.moveTo(10, yOffset + 280);
@@ -1083,7 +1040,6 @@
             }
         }
 
-        // CONVERT CANVAS TO ESC/POS RASTER BYTES WITH DITHERING
         function canvasToEscPosRasterBytes(canvas) {
             const width = canvas.width;
             const height = canvas.height;
@@ -1091,8 +1047,7 @@
             const imgData = ctx.getImageData(0, 0, width, height);
             const data = imgData.data;
 
-            // Simple Floyd-Steinberg Dithering
-            const ditherThreshold = 160;
+            const ditherThreshold = 145;
             for (let y = 0; y < height; y++) {
                 for (let x = 0; x < width; x++) {
                     const idx = (y * width + x) * 4;
@@ -1115,11 +1070,16 @@
             const yL = height % 256;
             const yH = Math.floor(height / 256);
 
-            const header = [0x1D, 0x76, 0x30, 0, xL, xH, yL, yH];
-            const rasterBytes = new Uint8Array(header.length + (width / 8) * height + 8);
-            rasterBytes.set(header, 0);
+            const initCommands = [
+                0x1B, 0x40,             // ESC @: Reset เครื่องพิมพ์
+                0x1B, 0x73, 0x00,       // ESC s: ตั้งค่าความเร็วการพิมพ์ให้คงที่
+                0x1D, 0x76, 0x30, 0, xL, xH, yL, yH // GS v 0: Command Raster
+            ];
 
-            let offset = header.length;
+            const rasterBytes = new Uint8Array(initCommands.length + (width / 8) * height + 8);
+            rasterBytes.set(initCommands, 0);
+
+            let offset = initCommands.length;
             for (let y = 0; y < height; y++) {
                 for (let x = 0; x < width; x += 8) {
                     let byteVal = 0;
@@ -1145,7 +1105,6 @@
             return rasterBytes;
         }
 
-        // REAL PRINT DIRECTLY TO USB PRINTER
         async function sendDirectUsbPrint() {
             const printBtn = document.getElementById('print-btn');
             printBtn.disabled = true;
@@ -1169,7 +1128,6 @@
             }
         }
 
-        // TEST PRINTER CONNECTION VIA USB
         async function testPrinterConnection() {
             const width = parseInt(document.getElementById('paper-width').value) || 576;
             
@@ -1231,6 +1189,11 @@
                 statusText.innerText = "พิมพ์รูปภาพสำเร็จ! รับรูปด้านล่างเครื่อง";
                 closeBtn.classList.remove('opacity-0', 'pointer-events-none');
                 playSound('success');
+
+                // ปิดหน้าต่างป๊อบอัพพิมพ์รูปภาพอัตโนมัติภายใน 3 วินาที (3000 ms)
+                setTimeout(() => {
+                    closePrinterModal();
+                }, 3000);
             }, 3600);
         }
 
@@ -1242,7 +1205,9 @@
         }
 
         window.onload = function() {
+            document.getElementById('shadow-slider').value = 70;
             updateShadowFilter();
+
             renderPhotoStripSlots();
             initCamera();
 
